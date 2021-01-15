@@ -1,0 +1,2 @@
+# PrivacyChecker
+javassist实现hook隐私权限api访问
