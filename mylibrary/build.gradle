@@ -29,5 +29,5 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    api 'org.javassist:javassist:3.20.0-GA'
+    api 'org.javassist:javassist:3.22.0-GA'
 }

@@ -41,18 +41,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void visitPrivacy() {
         StringBuilder sb = new StringBuilder();
-//        sb.append("\n\nMainActivity.getIMSI_SubscriberId: " + getIMSI_SubscriberId(context));
-//        sb.append("\n\nSensorsDataAPI.isSDKDisabled: " + SensorsDataAPI.isSDKDisabled());
-//        sb.append("\n\nUnicorn.isInit: " + Unicorn.isInit());
-//        sb.append("\n\nPrivacyVisitor.getIMSI_SubscriberId: " + PrivacyVisitor.getIMSI_SubscriberId(context));
-//        sb.append("\n\nPrivacyVisitor.getIMEI_DeviceId: " + PrivacyVisitor.getIMEI_DeviceId(context));
-//        sb.append("\n\nPrivacyVisitor.getIpAddress: " + PrivacyVisitor.getIpAddress(context));
-//        sb.append("\n\nPrivacyVisitor.getMacAddress: " + PrivacyVisitor.getMacAddress(context));
-//        sb.append("\n\nPrivacyVisitor.getSSID: " + PrivacyVisitor.getSSID(context));
+        sb.append("\n\nMainActivity.getIMSI_SubscriberId: " + getIMSI_SubscriberId(context));
+        sb.append("\n\nSensorsDataAPI.isSDKDisabled: " + SensorsDataAPI.isSDKDisabled());
+        sb.append("\n\nUnicorn.isInit: " + Unicorn.isInit());
+        sb.append("\n\nPrivacyVisitor.getIMSI_SubscriberId: " + PrivacyVisitor.getIMSI_SubscriberId(context));
+        sb.append("\n\nPrivacyVisitor.getIMEI_DeviceId: " + PrivacyVisitor.getIMEI_DeviceId(context));
+        sb.append("\n\nPrivacyVisitor.getIpAddress: " + PrivacyVisitor.getIpAddress(context));
+        sb.append("\n\nPrivacyVisitor.getMacAddress: " + PrivacyVisitor.getMacAddress(context));
+        sb.append("\n\nPrivacyVisitor.getSSID: " + PrivacyVisitor.getSSID(context));
         sb.append("\n\nPrivacyVisitor.getAndroidID: " + PrivacyVisitor.getAndroidID(context));
-//        sb.append("\n\nPrivacyVisitor.getRunningAppProcesses: " + PrivacyVisitor.getRunningAppProcesses(context));
-//        sb.append("\n\nNIMUtil.getProcessFromFile: " + RefInvoke.invokeStaticMethod(NIMUtil.class,"getProcessFromFile"));
-//        sb.append("\n\nNIMUtil.isMainProcessLive: " + NIMUtil.isMainProcessLive(context));
+        sb.append("\n\nPrivacyVisitor.getRunningAppProcesses: " + PrivacyVisitor.getRunningAppProcesses(context));
+        sb.append("\n\nNIMUtil.getProcessFromFile: " + RefInvoke.invokeStaticMethod(NIMUtil.class,"getProcessFromFile"));
+        sb.append("\n\nNIMUtil.isMainProcessLive: " + NIMUtil.isMainProcessLive(context));
         ((TextView) findViewById(R.id.tv)).setText(sb.toString());
 
 //        NIMUtil.isMainProcessLive(context);

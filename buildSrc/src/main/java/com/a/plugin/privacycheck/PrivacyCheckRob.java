@@ -15,10 +15,10 @@ import javassist.expr.MethodCall;
 
 public class PrivacyCheckRob {
 
-    public static void insertCode(List<CtClass> box, File jarFile) throws Exception {
+    public static void insertCode(List<CtClass> ctClasses, File jarFile) throws Exception {
         long startTime = System.currentTimeMillis();
         ZipOutputStream outStream = new JarOutputStream(new FileOutputStream(jarFile));
-        for (CtClass ctClass : box) {
+        for (CtClass ctClass : ctClasses) {
             if (ctClass.isFrozen()) ctClass.defrost();
             if (!ctClass.isFrozen()&&!ctClass.getName().equals("com.a.privacychecker.MainApp")) {
                 for (CtMethod ctMethod : ctClass.getDeclaredMethods()) {
