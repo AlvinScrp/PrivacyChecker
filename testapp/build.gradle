@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
+//    id 'mycustom-plugin'
 }
+
 
 android {
     compileSdkVersion 29

@@ -1,3 +1,4 @@
+include ':privacycheckPlugin'
 include ':testapp'
 include ':mylibrary'
 include ':app'

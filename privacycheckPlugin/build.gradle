@@ -1,18 +1,11 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.novoda:bintray-release:0.9.2'
-    }
-}
 apply plugin: 'groovy'
-apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
 repositories {
     jcenter()
     google()
     mavenCentral()
+
 }
 dependencies {
     implementation gradleApi() //gradle sdk
@@ -20,6 +13,7 @@ dependencies {
     compile group: 'org.smali', name: 'dexlib2', version: '2.2.4'
     implementation 'com.android.tools.build:gradle:3.6.1'
     implementation 'org.javassist:javassist:3.22.0-GA'
+
 
 }
 
@@ -43,3 +37,4 @@ publish {
     bintrayKey = '2cee485efd4fe60a99c309553b383a627f6dd2f6'
     dryRun = 'false'
 }
+//        ./gradlew clean build bintrayUpload  -PbintrayUser=alvinscrp -PbintrayKey=2cee485efd4fe60a99c309553b383a627f6dd2f6 -PdryRun=false
