@@ -44,7 +44,7 @@ class PrivacyCheckTransformRob extends Transform {
     void transform(TransformInvocation transformInvocation) throws Exception {
         super.transform(transformInvocation)
 
-        println "----------Privacy check transform start----------"
+        println "----------Privacy check transform start buildsrc----------"
 
         project.android.bootClasspath.each {
             classPool.appendClassPath(it.absolutePath)
@@ -59,7 +59,7 @@ class PrivacyCheckTransformRob extends Transform {
         //修改并打包进jarFile
         PrivacyCheckRob.insertCode(ctClasses, jarFile)
 
-        println "----------Privacy check transform end----------"
+        println "----------Privacy check transform end buildSrc----------"
 
 //        throw new NullPointerException(("hahahahahahaha"))
     }

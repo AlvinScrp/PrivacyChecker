@@ -10,8 +10,7 @@ class PrivacyCheckPlugin implements Plugin<Project> {
     void apply(Project project) {
         println "this is my custom plugin PrivacyCheckPlugin in buildSrc test"
 
-//        project.android.registerTransform(new PrivacyCheckTransform(project))
-        project.android.registerTransform(new PrivacyCheckTransformRob(project))
+//        project.android.registerTransform(new PrivacyCheckTransformRob(project))
     }
 
 }
