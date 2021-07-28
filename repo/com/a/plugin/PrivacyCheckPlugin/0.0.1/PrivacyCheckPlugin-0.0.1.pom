@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.a.plugin</groupId>
-  <artifactId>MyCustomPlugin</artifactId>
-  <version>1.0.0</version>
+  <artifactId>PrivacyCheckPlugin</artifactId>
+  <version>0.0.1</version>
   <dependencies>
     <dependency>
       <groupId>org.smali</groupId>

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.a.mylibrary.PrivacyVisitor;
 import com.netease.nimlib.sdk.util.NIMUtil;
 import com.qiyukf.unicorn.api.Unicorn;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private void visitPrivacy() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n\nMainActivity.getIMSI_SubscriberId: " + getIMSI_SubscriberId(context));
-        sb.append("\n\nSensorsDataAPI.isSDKDisabled: " + SensorsDataAPI.isSDKDisabled());
+//        sb.append("\n\nSensorsDataAPI.isSDKDisabled: " + SensorsDataAPI.isSDKDisabled());
         sb.append("\n\nUnicorn.isInit: " + Unicorn.isInit());
         sb.append("\n\nPrivacyVisitor.getIMSI_SubscriberId: " + PrivacyVisitor.getIMSI_SubscriberId(context));
         sb.append("\n\nPrivacyVisitor.getIMEI_DeviceId: " + PrivacyVisitor.getIMEI_DeviceId(context));

@@ -2,13 +2,13 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath 'com.novoda:bintray-release:0.9.2'
-    }
+//    dependencies {
+//        classpath 'com.novoda:bintray-release:0.9.2'
+//    }
 }
 apply plugin: 'groovy'
-apply plugin: 'com.novoda.bintray-release'
-apply plugin: 'maven'
+//apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'maven'
 repositories {
     jcenter()
     google()
@@ -23,23 +23,23 @@ dependencies {
 
 }
 
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: uri('../repo')) //仓库的路径，此处是项目根目录下的 repo 的文件夹
-        pom.groupId = 'com.a.plugin'  //groupId ，自行定义，一般是包名
-        pom.artifactId = 'PrivacyCheckPlugin' //artifactId ，自行定义
-        pom.version = '1.0.0' //version 版本号
-    }
-}
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        repository(url: uri('../repo')) //仓库的路径，此处是项目根目录下的 repo 的文件夹
+//        pom.groupId = 'com.a.plugin'  //groupId ，自行定义，一般是包名
+//        pom.artifactId = 'PrivacyCheckPlugin' //artifactId ，自行定义
+//        pom.version = '1.0.0' //version 版本号
+//    }
+//}
 
-publish {
-    userOrg = 'alvinscrp'
-    groupId = 'com.a.plugin'
-    artifactId = 'PrivacyCheckPlugin'
-    publishVersion = '0.0.1'
-    desc = 'Oh hi, this is a nice description for a project, right?'
-    website = 'https://github.com/AlvinScrp/PrivacyChecker'
-    bintrayUser = 'alvinscrp'
-    bintrayKey = '2cee485efd4fe60a99c309553b383a627f6dd2f6'
-    dryRun = 'false'
-}
+//publish {
+//    userOrg = 'alvinscrp'
+//    groupId = 'com.a.plugin'
+//    artifactId = 'PrivacyCheckPlugin'
+//    publishVersion = '0.0.1'
+//    desc = 'Oh hi, this is a nice description for a project, right?'
+//    website = 'https://github.com/AlvinScrp/PrivacyChecker'
+//    bintrayUser = 'alvinscrp'
+//    bintrayKey = '2cee485efd4fe60a99c309553b383a627f6dd2f6'
+//    dryRun = 'false'
+//}
