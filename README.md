@@ -14,17 +14,17 @@ javassist实现hook隐私权限api访问
 //build.gradle(根目录)文件
 buildscript {
     repositories {
-        //插件库放到了bintray.com上，需要翻墙访问。
-        maven { url 'https://dl.bintray.com/alvinscrp/maven' }
+        //插件库放到了jitpack上，需要翻墙访问。
+         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath 'com.a.plugin:PrivacyCheckPlugin:0.0.1'
+        classpath 'com.github.AlvinScrp:PrivacyChecker:0.0.2'
     }
 }
 
 allprojects {
     repositories {
-        maven { url 'https://dl.bintray.com/alvinscrp/maven' }
+         maven { url 'https://jitpack.io' }
     }
 }
 -----------------------------------
