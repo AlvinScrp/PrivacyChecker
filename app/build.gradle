@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'privacycheck-plugin'
+//apply plugin: 'privacycheck-plugin'
 //apply plugin: 'privacycheck-buildsrc-plugin'
 
 android {

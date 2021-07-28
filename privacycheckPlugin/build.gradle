@@ -23,9 +23,9 @@ dependencies {
 //repositories{
 //    mavenCentral()
 //}
-group = 'com.a.plugin'
-archivesBaseName = 'PrivacyCheckPlugin'
-version = '0.0.1'
+//group = 'com.a.plugin'
+//archivesBaseName = 'PrivacyCheckPlugin'
+//version = '0.0.1'
 //uploadArchives {
 //    repositories{
 //        mavenDeployer {
