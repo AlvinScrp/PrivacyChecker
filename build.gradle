@@ -19,7 +19,7 @@ buildscript {
         // in the individual module build.gradle files
 //        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath 'com.github.AlvinScrp:PrivacyChecker:758a2c6c1c'
+        classpath 'com.github.AlvinScrp:PrivacyChecker:0.0.3'
     }
 }
 

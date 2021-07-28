@@ -3,3 +3,4 @@ include ':testapp'
 include ':mylibrary'
 include ':app'
 rootProject.name = "PrivacyChecker"
+include ':pluginLib'

@@ -14,7 +14,8 @@ dependencies {
     implementation localGroovy() //groovy sdk
     compile group: 'org.smali', name: 'dexlib2', version: '2.2.4'
     implementation 'com.android.tools.build:gradle:3.6.1'
-    implementation 'org.javassist:javassist:3.22.0-GA'
+//    implementation 'org.javassist:javassist:3.22.0-GA'
+    implementation project(':pluginLib')
 
 
 }

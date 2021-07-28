@@ -1,10 +1,7 @@
 package com.a.plugin.privacycheck;
 
-import java.util.Arrays;
-
 import javassist.CannotCompileException;
 import javassist.expr.MethodCall;
-import javassist.runtime.Desc;
 
 public class InjectMethodProxy {
 

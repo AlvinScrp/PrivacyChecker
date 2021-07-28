@@ -22,7 +22,7 @@ class PrivacyCheckTransformRob extends Transform {
 
     @Override
     String getName() {
-        return "PrivacyCheckTransformRob"
+        return "PrivacyCheckTransformBuildSrc"
     }
 
     @Override
