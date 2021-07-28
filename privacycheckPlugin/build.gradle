@@ -1,6 +1,6 @@
 apply plugin: 'groovy'
-apply plugin: 'maven'
-//apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'maven'
+apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'maven-publish'
 //apply plugin: 'com.novoda.bintray-release'
 repositories {
@@ -19,55 +19,16 @@ dependencies {
 
 }
 
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            Production(MavenPublication) {
-//                from components.release
-//                // 使用方引用 implementation 'cn.com.jack:mavendemo:2.7.0-SNAPSHOT'
-//                groupId = "com.a.plugin"
-//                artifactId = "PrivacyCheckPlugin'"
-//                version = '0.0.1'
-//                // 上传source，这样使用放可以看到方法注释
-//                artifact generateSourcesJar
-//            }
-//        }
-//        repositories {
-//            maven {
-//                url = versionName.endsWith('SNAPSHOT') ? SNAPSHOT_REPOSITORY_URL : RELEASE_REPOSITORY_URL
-//                // 仓库用户名密码
-//                credentials {
-//                    username = "shine"
-//                    password = "shine"
-//                }
-//            }
+//repositories{
+//    mavenCentral()
+//}
+//group = 'com.a.plugin'
+//archivesBaseName = 'PrivacyCheckPlugin'
+//version = '0.0.1'
+//uploadArchives {
+//    repositories{
+//        mavenDeployer {
+//            repository(url: uri('../repo')) //仓库的路径，此处是项目根目录下的 repo 的文件夹
 //        }
 //    }
 //}
-
-repositories{
-    mavenCentral()
-}
-group = 'com.a.plugin'
-archivesBaseName = 'PrivacyCheckPlugin'
-version = '0.0.1'
-uploadArchives {
-    repositories{
-        mavenDeployer {
-            repository(url: uri('../repo')) //仓库的路径，此处是项目根目录下的 repo 的文件夹
-        }
-    }
-}
-//
-//publish {
-//    userOrg = 'alvinscrp'
-//    groupId = 'com.a.plugin'
-//    artifactId = 'PrivacyCheckPlugin'
-//    publishVersion = '0.0.1'
-//    desc = 'Oh hi, this is a nice description for a project, right?'
-//    website = 'https://github.com/AlvinScrp/PrivacyChecker'
-//    bintrayUser = 'alvinscrp'
-//    bintrayKey = '2cee485efd4fe60a99c309553b383a627f6dd2f6'
-//    dryRun = 'false'
-//}
-//        ./gradlew clean build bintrayUpload  -PbintrayUser=alvinscrp -PbintrayKey=2cee485efd4fe60a99c309553b383a627f6dd2f6 -PdryRun=false
