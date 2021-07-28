@@ -20,3 +20,16 @@ dependencies {
 
 }
 
+//repositories{
+//    mavenCentral()
+//}
+group = 'com.a.plugin'
+archivesBaseName = 'PrivacyCheckPlugin'
+version = '0.0.1'
+//uploadArchives {
+//    repositories{
+//        mavenDeployer {
+//            repository(url: uri('../repo')) //仓库的路径，此处是项目根目录下的 repo 的文件夹
+//        }
+//    }
+//}
