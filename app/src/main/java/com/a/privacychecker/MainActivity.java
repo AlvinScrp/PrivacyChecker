@@ -16,6 +16,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         sb.append("\n\nPrivacyVisitor.getRunningAppProcesses: " + PrivacyVisitor.getRunningAppProcesses(context));
         sb.append("\n\nNIMUtil.getProcessFromFile: " + RefInvoke.invokeStaticMethod(NIMUtil.class,"getProcessFromFile"));
         sb.append("\n\nNIMUtil.isMainProcessLive: " + NIMUtil.isMainProcessLive(context));
+        sb.append("\n\nNetworkInterface.getNetworkInterfaces: " + PrivacyVisitor.getNewMac());
+
         ((TextView) findViewById(R.id.tv)).setText(sb.toString());
 
 //        NIMUtil.isMainProcessLive(context);

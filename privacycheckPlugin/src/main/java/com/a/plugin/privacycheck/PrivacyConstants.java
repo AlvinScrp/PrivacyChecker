@@ -13,7 +13,7 @@ public  class PrivacyConstants {
     public static String Privacy_System_getString ="android.provider.Settings$System.getString";
     public static String Privacy_getSSID ="android.net.wifi.WifiInfo.getSSID";
     public static String Privacy_getMacAddress ="android.net.wifi.WifiInfo.getMacAddress";
-    public static String Privacy_getNetworkInterfaces ="NetworkInterface.getNetworkInterfaces";
+    public static String Privacy_getNetworkInterfaces ="java.net.NetworkInterface.getNetworkInterfaces";
 
     static {
         privacySet.add(Privacy_getSubscriberId);
