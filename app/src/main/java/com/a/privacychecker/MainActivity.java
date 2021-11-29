@@ -8,6 +8,7 @@ import android.telephony.TelephonyManager;
 import android.widget.TextView;
 
 import com.a.mylibrary.PrivacyVisitor;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.netease.nimlib.sdk.util.NIMUtil;
 import com.qiyukf.unicorn.api.Unicorn;
 //import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_allow).setOnClickListener(v -> updateAllowFlag(true));
         findViewById(R.id.btn_reject).setOnClickListener(v -> updateAllowFlag(false));
         updateAllowFlag(false);
+        PushServiceFactory.init(getApplicationContext());
+
 
     }
 
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         sb.append("\n\nNIMUtil.getProcessFromFile: " + RefInvoke.invokeStaticMethod(NIMUtil.class,"getProcessFromFile"));
         sb.append("\n\nNIMUtil.isMainProcessLive: " + NIMUtil.isMainProcessLive(context));
         sb.append("\n\nNetworkInterface.getNetworkInterfaces: " + PrivacyVisitor.getNewMac());
+        sb.append("\n\ngetHostAddress: " + PrivacyVisitor.getHostAddress());
 
         ((TextView) findViewById(R.id.tv)).setText(sb.toString());
 

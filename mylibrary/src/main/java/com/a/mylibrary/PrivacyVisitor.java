@@ -7,9 +7,13 @@ import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
 public class PrivacyVisitor {
@@ -125,6 +129,28 @@ public class PrivacyVisitor {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public static String getHostAddress() {
+        try {
+            Enumeration var0 = NetworkInterface.getNetworkInterfaces();
+
+            while(var0.hasMoreElements()) {
+                NetworkInterface var1 = (NetworkInterface)var0.nextElement();
+                Enumeration var2 = var1.getInetAddresses();
+
+                while(var2.hasMoreElements()) {
+                    InetAddress var3 = (InetAddress)var2.nextElement();
+                    if (!var3.isLoopbackAddress() && var3 instanceof Inet4Address) {
+                        return var3.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException var4) {
+//            com.qiyukf.nimlib.k.b.e(a, "get ip address socket exception");
+        }
+
+        return "";
     }
 
     public static String getRunningAppProcesses(Context context) {
