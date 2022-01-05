@@ -27,14 +27,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TestMainActivity extends AppCompatActivity {
 
     private Button btnByteUse;
+    private Button btnClearLog;
     private TextView tvResult;
     private Context context;
+
+    private List<String> logs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,7 @@ public class TestMainActivity extends AppCompatActivity {
         context = this;
 //        Log.d("alvin", Log.getStackTraceString(new Throwable()));
         btnByteUse = findViewById(R.id.btnByteUse);
+        btnClearLog = findViewById(R.id.btnClearLog);
         tvResult = findViewById(R.id.tvResult);
 
         findViewById(R.id.btn_byteUse_detail)
@@ -55,11 +63,35 @@ public class TestMainActivity extends AppCompatActivity {
             getByteUse();
         });
 
+        btnClearLog.setOnClickListener(v -> {
+            clearLogButLastOne();
+        });
+
         hasPermissionToReadNetworkStats();
     }
 
+    private void clearLogButLastOne() {
+        if (logs.size() > 1) {
+            String lastOne = logs.get(logs.size() - 1);
+            logs.clear();
+            logs.add(lastOne);
+        }
+        tvResult.setText(listToString(logs));
+    }
+
     private void getByteUse() {
-        tvResult.setText(getByteUseByUseId());
+        String date = stampToDate(System.currentTimeMillis());
+        String usage = getByteUseByUseId();
+        logs.add(date + "--> " + usage);
+        tvResult.setText(listToString(logs));
+    }
+
+    private String listToString(List<String> logs) {
+        StringBuilder sb = new StringBuilder();
+        for (String log : logs) {
+            sb.append(log + "\n");
+        }
+        return sb.toString();
     }
 
     private void getWifiByteUse() {
@@ -92,7 +124,7 @@ public class TestMainActivity extends AppCompatActivity {
 
             NetworkStatsManager networkStatsManager = (NetworkStatsManager) getSystemService(NETWORK_STATS_SERVICE);
 
-            summaryStats = networkStatsManager.querySummary(ConnectivityManager.TYPE_WIFI, subId,  1641285089900L, System.currentTimeMillis());
+            summaryStats = networkStatsManager.querySummary(ConnectivityManager.TYPE_WIFI, subId, 1641285089900L, System.currentTimeMillis());
             do {
                 summaryStats.getNextBucket(summaryBucket);
 
@@ -101,7 +133,7 @@ public class TestMainActivity extends AppCompatActivity {
 
                 int summaryUid = summaryBucket.getUid();
                 if (uid == summaryUid) {
-                    rxByte +=summaryBucket.getRxBytes();
+                    rxByte += summaryBucket.getRxBytes();
                     txByte += summaryBucket.getTxBytes();
 //                    result = msg;
                 }
@@ -111,6 +143,7 @@ public class TestMainActivity extends AppCompatActivity {
             String msg = "uid:" + uid + "   rx:" + rxByte +
                     "   tx:" + txByte;
             Log.i(TestMainActivity.class.getSimpleName(), msg);
+            result = msg;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,6 +202,20 @@ public class TestMainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /*
+     * 将时间戳转换为时间
+     *
+     * s就是时间戳
+     */
+
+    public static String stampToDate(long timeStamp) {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(timeStamp);
+        res = simpleDateFormat.format(date);
+        return res;
     }
 
 

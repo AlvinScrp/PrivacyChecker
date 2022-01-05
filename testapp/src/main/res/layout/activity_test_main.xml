@@ -8,37 +8,55 @@
     tools:context=".TestMainActivity">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:text="打开应用详情"
-            android:id="@+id/btn_byteUse_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
-            android:text="打开年糕妈妈应用详情"
+            android:id="@+id/btn_byteUse_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打开本应用详情" />
+
+        <Button
+            android:layout_marginLeft="12dp"
             android:id="@+id/btn_nicomama_detail"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="打开年糕妈妈应用详情" />
 
 
     </LinearLayout>
 
-
-
-
-    <Button
-        android:text="查询流量使用"
-        android:id="@+id/btnByteUse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/tvResult"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/btnByteUse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查询流量使用" />
+
+        <Button
+            android:layout_marginLeft="12dp"
+            android:id="@+id/btnClearLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清除日志，但留最后一条" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!" />
+
+    </ScrollView>
+
 
 </LinearLayout>
