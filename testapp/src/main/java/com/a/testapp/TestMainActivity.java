@@ -1,61 +1,175 @@
 package com.a.testapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityManager;
+import android.app.AppOpsManager;
+import android.app.usage.NetworkStats;
+import android.app.usage.NetworkStatsManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 public class TestMainActivity extends AppCompatActivity {
+
+    private Button btnByteUse;
+    private TextView tvResult;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_main);
+        context = this;
 //        Log.d("alvin", Log.getStackTraceString(new Throwable()));
-        Log.d("alvin", "getProcessNameRunningAppProcess:" + getProcessNameByRunningAppProcess(this));
-        Log.d("alvin", "getProcessNameCmdline:" + getProcessNameByCmdline());
+        btnByteUse = findViewById(R.id.btnByteUse);
+        tvResult = findViewById(R.id.tvResult);
+
+        findViewById(R.id.btn_byteUse_detail)
+                .setOnClickListener(v -> gotoAPPDetail("com.a.testapp"));
+
+        findViewById(R.id.btn_nicomama_detail)
+                .setOnClickListener(v -> gotoAPPDetail("com.nicomama.niangaomama"));
+
+        btnByteUse.setOnClickListener(v -> {
+            getByteUse();
+        });
+
+        hasPermissionToReadNetworkStats();
     }
 
-    private static String getProcessNameByRunningAppProcess(Context context) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> list = activityManager.getRunningAppProcesses();
-
-        String processName = null;
-        if (list != null) {
-            for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : list) {
-                if (runningAppProcessInfo.pid == android.os.Process.myPid()) {
-                    processName = runningAppProcessInfo.processName;
-                    break;
-                }
-            }
-        }
-        return processName;
+    private void getByteUse() {
+        tvResult.setText(getByteUseByUseId());
     }
 
-    public static String getProcessNameByCmdline() {
-        BufferedReader reader = null;
+    private void getWifiByteUse() {
         try {
-            File file = new File("/proc/" + android.os.Process.myPid() + "/" + "cmdline");
-            reader = new BufferedReader(new FileReader(file));
-            return reader.readLine().trim();
-        } catch (IOException e) {
-            return null;
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            NetworkStatsManager networkStatsManager = (NetworkStatsManager) getSystemService(NETWORK_STATS_SERVICE);
+            // 获取到目前为止设备的Wi-Fi流量统计
+            NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(ConnectivityManager.TYPE_WIFI, "", 0, System.currentTimeMillis());
+            Log.i("Info", "Total: " + (bucket.getRxBytes() + bucket.getTxBytes()));
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
+
+    private String getByteUseByUseId() {
+        String result = "";
+
+        try {
+            int rxByte = 0;
+            int txByte = 0;
+            // 获取subscriberId
+            TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+//            String subId = tm.getSubscriberId();
+            String subId = "";
+
+            int uid = getUidByPackageName(context, "com.nicomama.niangaomama");
+
+
+            NetworkStats summaryStats;
+            NetworkStats.Bucket summaryBucket = new NetworkStats.Bucket();
+
+            NetworkStatsManager networkStatsManager = (NetworkStatsManager) getSystemService(NETWORK_STATS_SERVICE);
+
+            summaryStats = networkStatsManager.querySummary(ConnectivityManager.TYPE_WIFI, subId,  1641285089900L, System.currentTimeMillis());
+            do {
+                summaryStats.getNextBucket(summaryBucket);
+
+//                String msg = "uid:" + summaryBucket.getUid() + "   rx:" + summaryBucket.getRxBytes() +
+//                        "   tx:" + summaryBucket.getTxBytes();
+
+                int summaryUid = summaryBucket.getUid();
+                if (uid == summaryUid) {
+                    rxByte +=summaryBucket.getRxBytes();
+                    txByte += summaryBucket.getTxBytes();
+//                    result = msg;
+                }
+
+            } while (summaryStats.hasNextBucket());
+
+            String msg = "uid:" + uid + "   rx:" + rxByte +
+                    "   tx:" + txByte;
+            Log.i(TestMainActivity.class.getSimpleName(), msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static int getUidByPackageName(Context context, String packageName) {
+        int uid = -1;
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_META_DATA);
+
+            uid = packageInfo.applicationInfo.uid;
+//            Log.i(TestMainActivity.class.getSimpleName(), packageInfo.packageName + " uid:" + uid);
+
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return uid;
+    }
+
+
+    private boolean hasPermissionToReadNetworkStats() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        final AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+        int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
+                android.os.Process.myUid(), getPackageName());
+        if (mode == AppOpsManager.MODE_ALLOWED) {
+            return true;
+        }
+
+        requestReadNetworkStats();
+        return false;
+    }
+
+    // 打开“有权查看使用情况的应用”页面
+    private void requestReadNetworkStats() {
+        Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+        startActivity(intent);
+    }
+
+
+    public void gotoAPPDetail(String packageName) {
+        try {
+            Intent intent = new Intent();
+            //下面这种方案是直接跳转到当前应用的设置界面。
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", packageName, null);
+            intent.setData(uri);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

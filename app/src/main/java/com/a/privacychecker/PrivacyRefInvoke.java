@@ -5,7 +5,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class RefInvoke {
+public class PrivacyRefInvoke {
 
     //无参
     public static Object createObject(String className) {

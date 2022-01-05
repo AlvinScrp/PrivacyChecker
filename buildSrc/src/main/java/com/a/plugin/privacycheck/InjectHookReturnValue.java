@@ -1,55 +1,88 @@
 package com.a.plugin.privacycheck;
 
 import javassist.CannotCompileException;
+import javassist.expr.FieldAccess;
 import javassist.expr.MethodCall;
 
 public class InjectHookReturnValue {
 
     public static void execute(MethodCall m) throws CannotCompileException {
-        String mLongName = m.getClassName() + "." + m.getMethodName();
-        //simple inject log
-//        String replace = "{  android.util.Log.d(\"alvin\",android.util.Log.getStackTraceString(new Throwable(\""+mLongName+"\"))); $_ = $proceed($$); }";
-//        m.replace(replace);
 
+        boolean isAllow = PrivacyConfig.isAllow;
+        String mLongName = m.getClassName() + "." + m.getMethodName();
         StringBuilder sb = new StringBuilder();
-        sb.append("{ ");
-        sb.append("     if(com.a.privacychecker.MainApp.allowVisit){");
-        sb.append("         {  android.util.Log.d(\"alvin\",android.util.Log.getStackTraceString(new Throwable(\"" + mLongName + "\"))); $_ = $proceed($$); }");
-        sb.append("     }else {");
-        sb.append(getInvalidReturnText(m, mLongName));
-        sb.append("     }");
-        sb.append("}");
+        sb.append("\n{ ");
+        if (isAllow) {
+            sb.append("\n { $_ = $proceed($$); }");
+        } else {
+            sb.append("\n { $_ =($r)(" + PrivacyConfig.Statement_Reject_Method + "(\"" + m.getClassName() + "\",\"" + m.getMethodName() + "\", $0,$sig, $args)); }");
+        }
+        sb.append("\n {" + PrivacyConfig.Statement_log + "(" + isAllow + ",\"" + mLongName + "\"); }");
+
+        sb.append("\n}");
         String replace = sb.toString();
-        System.out.println(sb.toString());
         m.replace(replace);
     }
 
-    public static String getInvalidReturnText(MethodCall m, String mLongName) {
-
-        if (mLongName.equals(
-                PrivacyConstants.Privacy_RunningAppProcesses)) {
-//            return " $_ = new java.util.ArrayList();";
-//            return " $_ = new java.util.ArrayList<android.app.ActivityManager$RunningAppProcessInfo>();";
-            return " $_ =  null;";
-        } else if (mLongName.equals(PrivacyConstants.Privacy_getIpAddress)) {
-            return " $_ = 0 ;";
-        } else if (mLongName.equals(PrivacyConstants.Privacy_getSubscriberId)) {
-            return " $_ = \"invalid_SubscriberId\";";
-        } else if (mLongName.equals(PrivacyConstants.Privacy_getDeviceId)) {
-            return " $_ = \"invalid_deviceId\" ;";
-        } else if (mLongName.equals(PrivacyConstants.Privacy_Secure_getString)) {
-            return " $_ = \"sds3dw2sde5f\" ;";
-        } else if (mLongName.equals(PrivacyConstants.Privacy_System_getString)) {
-            return " $_ = \"sds3dw2sde5f\";";
-        } else if (mLongName.equals(PrivacyConstants.Privacy_getSSID)) {
-            return " $_ = \"<unknown ssid>\";";
-        } else if (mLongName.equals(PrivacyConstants.Privacy_getMacAddress)) {
-            return " $_ = \"02:00:00:00:00:00\" ;";
+    public static void execute(FieldAccess f) throws CannotCompileException {
+        boolean isAllow = PrivacyConfig.isAllow;
+        String mLongName = f.getClassName() + "." + f.getFieldName();
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n{ ");
+        if (isAllow) {
+            sb.append("\n  { $_ = $proceed($$);}");
         } else {
-            return " $_ =  null;";
+            sb.append("\n  { $_ =($r)(" + PrivacyConfig.Statement_Reject_Field + "(\"" + mLongName + "\")); }");
         }
+        sb.append("\n {" + PrivacyConfig.Statement_log + "(" + isAllow + ",\"" + mLongName + "\"); }");
+
+        sb.append("\n}");
+        String replace = sb.toString();
+        f.replace(replace);
     }
 
-
+//    public static void execute(MethodCall m) throws CannotCompileException {
+//        String mLongName = m.getClassName() + "." + m.getMethodName();
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("\n{ ");
+//        sb.append("\n     if("+PrivacyConfig.Statement_Allow_bool+"){");
+//        sb.append("\n         {  ");
+//        sb.append("\n             $_ = $proceed($$); ");
+//        sb.append("\n             android.util.Log.d(\""+PrivacyConfig.Log_tag_Allow+"\",android.util.Log.getStackTraceString(new Throwable(\"" + mLongName + "\")));  ");
+//
+//        sb.append("\n         }");
+//        sb.append("\n     }else {");
+//        sb.append("\n        {  ");
+//        sb.append("\n          $_ =($r)("+PrivacyConfig.Statement_Reject_Method +"(\""+ m.getClassName()+"\",\""+m.getMethodName()+"\", $0,$sig, $args)); ");
+//        sb.append("\n             android.util.Log.d(\""+PrivacyConfig.Log_tag_Reject+"\",android.util.Log.getStackTraceString(new Throwable(\"" + mLongName + "\"))); ");
+//        sb.append("\n         }");
+//        sb.append("\n     }");
+//        sb.append("\n}");
+//        String replace = sb.toString();
+//        m.replace(replace);
+//
+//
+//
+//    }
+//
+//    public static void execute(FieldAccess f) throws CannotCompileException {
+//        String mLongName = f.getClassName() + "." + f.getFieldName();
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("\n{ ");
+//        sb.append("\n  if(" + PrivacyConfig.Statement_Allow_bool + "){");
+//        sb.append("\n     {  ");
+//        sb.append("\n       $_ = $proceed($$); ");
+//        sb.append("\n       android.util.Log.d(\"" + PrivacyConfig.Log_tag_Allow + "\",android.util.Log.getStackTraceString(new Throwable(\"" + mLongName + "\")));  ");
+//        sb.append("\n     }");
+//        sb.append("\n  }else {");
+//        sb.append("\n    {  ");
+//        sb.append("\n     $_ =($r)(" + PrivacyConfig.Statement_Reject_Field + "(\"" + mLongName  + "\")); ");
+//        sb.append("\n     android.util.Log.d(\"" + PrivacyConfig.Log_tag_Reject + "\",android.util.Log.getStackTraceString(new Throwable(\"" + mLongName + "\"))); ");
+//        sb.append("\n     }");
+//        sb.append("\n  }");
+//        sb.append("\n}");
+//        String replace = sb.toString();
+//        f.replace(replace);
+//    }
 
 }

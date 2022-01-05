@@ -6,15 +6,17 @@ android {
 
     defaultConfig {
         applicationId "com.a.privacychecker"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters 'armeabi'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
     }
 
@@ -29,18 +31,48 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        release {
+
+            v1SigningEnabled = true
+            v2SigningEnabled = false
+        }
+        debug {
+
+            v1SigningEnabled = true
+            v2SigningEnabled = false
+        }
+    }
+
     lintOptions {
         abortOnError false
+    }
+
+    flavorDimensions "versionCode"
+
+    productFlavors {
+
+        a_pro {
+//            minSdkVersion isLocalDebug ? 21 : rootProject.ext.android.minSdkVersion //优化编译速度.
+        }
+        a_dev {
+
+
+        }
+
     }
 }
 
 dependencies {
 
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 //    api 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:2.0.2'
     api 'com.qiyukf.unicorn:unicorn:5.16.2'
+    api 'com.aliyun.dpa:oss-android-sdk:2.9.0'
+    api 'com.aliyun.video.android:upload:1.6.4'
     api 'com.aliyun.ams:alicloud-android-push:3.7.1'
     api 'com.aliyun.ams:alicloud-android-third-push-huawei:3.7.0'
     api 'com.aliyun.ams:alicloud-android-third-push-xiaomi:3.7.0'
@@ -48,4 +80,5 @@ dependencies {
     api 'com.aliyun.ams:alicloud-android-third-push-vivo:3.7.0'
     api 'com.aliyun.ams:alicloud-android-third-push-meizu:3.7.0'
     api project(':mylibrary')
+
 }

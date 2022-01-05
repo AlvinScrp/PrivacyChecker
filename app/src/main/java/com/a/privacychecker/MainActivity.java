@@ -3,22 +3,24 @@ package com.a.privacychecker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.a.mylibrary.PrivacyVisitor;
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+//import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.netease.nimlib.sdk.util.NIMUtil;
 import com.qiyukf.unicorn.api.Unicorn;
-//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.NetworkInterface;
-import java.net.SocketException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.UUID;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,59 +30,48 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = this;
+        {context = this;}
 
-        findViewById(R.id.btn_allow).setOnClickListener(v -> updateAllowFlag(true));
-        findViewById(R.id.btn_reject).setOnClickListener(v -> updateAllowFlag(false));
-        updateAllowFlag(false);
-        PushServiceFactory.init(getApplicationContext());
+        {findViewById(R.id.btn_privacychecker_detail)
+                    .setOnClickListener(v -> gotoAPPDetail("com.a.privacychecker")); }
+        findViewById(R.id.btn_nicomama_detail)
+                .setOnClickListener(v->gotoAPPDetail("com.nicomama.niangaomama"));
+        findViewById(R.id.btn_visit).setOnClickListener(v -> visitPrivacy());
 
-
-    }
-
-    private void updateAllowFlag(boolean allow) {
-        MainApp.allowVisit = allow;
-        ((TextView) findViewById(R.id.tvStatus)).setText("当前状态：" + (allow ? "允许" : "拒绝"));
-        visitPrivacy();
     }
 
     private void visitPrivacy() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n\nMainActivity.getIMSI_SubscriberId: " + getIMSI_SubscriberId(context));
-//        sb.append("\n\nSensorsDataAPI.isSDKDisabled: " + SensorsDataAPI.isSDKDisabled());
-        sb.append("\n\nUnicorn.isInit: " + Unicorn.isInit());
         sb.append("\n\nPrivacyVisitor.getIMSI_SubscriberId: " + PrivacyVisitor.getIMSI_SubscriberId(context));
         sb.append("\n\nPrivacyVisitor.getIMEI_DeviceId: " + PrivacyVisitor.getIMEI_DeviceId(context));
         sb.append("\n\nPrivacyVisitor.getIpAddress: " + PrivacyVisitor.getIpAddress(context));
-        sb.append("\n\nPrivacyVisitor.getMacAddress: " + PrivacyVisitor.getMacAddress(context));
+        sb.append("\n\nPrivacyVisitor.getMacAddress1: " + PrivacyVisitor.getMacAddress(context));
+        sb.append("\n\nPrivacyVisitor.getMacAddress2: " + PrivacyVisitor.getNewMac());
         sb.append("\n\nPrivacyVisitor.getSSID: " + PrivacyVisitor.getSSID(context));
         sb.append("\n\nPrivacyVisitor.getAndroidID: " + PrivacyVisitor.getAndroidID(context));
+        sb.append("\n\nBuild.Serial By Filed: " + PrivacyVisitor.getSerialByFiled());
+        sb.append("\n\nBuild.Serial By Method: " + PrivacyVisitor.getSerialByMethod());
         sb.append("\n\nPrivacyVisitor.getRunningAppProcesses: " + PrivacyVisitor.getRunningAppProcesses(context));
-        sb.append("\n\nNIMUtil.getProcessFromFile: " + RefInvoke.invokeStaticMethod(NIMUtil.class,"getProcessFromFile"));
+        sb.append("\n\nNIMUtil.getProcessFromFile: " + PrivacyRefInvoke.invokeStaticMethod(NIMUtil.class, "getProcessFromFile"));
         sb.append("\n\nNIMUtil.isMainProcessLive: " + NIMUtil.isMainProcessLive(context));
-        sb.append("\n\nNetworkInterface.getNetworkInterfaces: " + PrivacyVisitor.getNewMac());
         sb.append("\n\ngetHostAddress: " + PrivacyVisitor.getHostAddress());
 
-        ((TextView) findViewById(R.id.tv)).setText(sb.toString());
-
-//        NIMUtil.isMainProcessLive(context);
+        TextView tvResult = findViewById(R.id.tvResult);
+        tvResult.setText(sb.toString());
 
     }
 
-    public static String getIMSI_SubscriberId(Context context) {
-        StringBuilder sb = new StringBuilder();
+    public  void gotoAPPDetail(String packageName) {
         try {
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context
-                    .TELEPHONY_SERVICE);
-            if (telephonyManager != null) {
-                return telephonyManager.getSubscriberId();
-//                sb.append("\n\n IMSI_SubscriberId:" + operatorString);
-            }
+            Intent intent = new Intent();
+            //下面这种方案是直接跳转到当前应用的设置界面。
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", packageName, null);
+            intent.setData(uri);
+          startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
-            sb.append(e.getMessage());
         }
-        return sb.toString();
     }
 
 

@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -34,4 +35,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     api 'org.javassist:javassist:3.22.0-GA'
+    api 'com.android.support:multidex:1.0.2'
 }

@@ -6,44 +6,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_allow"
-            android:text="允许访问"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_reject"
-            android:text="拒绝访问"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
-        <TextView
-            android:textColor="@color/ysf_red_9d3b39"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/tvStatus"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_privacychecker_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="当前状态：允许" />
+            android:text="隐私检测app详情" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_nicomama_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="年糕妈妈app详情" />
+
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_gravity="center"
-            android:id="@+id/tv"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_visit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="访问" />
+
+
+
+        <TextView
+            android:id="@+id/tvStatusx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="修改PrivacyConfig.isAllow 再次测试"
+            android:textColor="@color/ysf_red_9d3b39" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Hello World!" />
 
-    </LinearLayout>
-
-
+    </ScrollView>
 </LinearLayout>
