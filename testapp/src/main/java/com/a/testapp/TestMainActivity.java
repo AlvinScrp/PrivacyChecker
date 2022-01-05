@@ -105,6 +105,10 @@ public class TestMainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 参考文章： https://blog.csdn.net/w7849516230/article/details/71705835/
+     * @return
+     */
     private String getByteUseByUseId() {
         String result = "";
 
