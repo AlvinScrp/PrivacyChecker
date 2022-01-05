@@ -144,7 +144,7 @@ public class TestMainActivity extends AppCompatActivity {
 
             } while (summaryStats.hasNextBucket());
 
-            String msg = "uid:" + uid + "   rx:" + rxByte +
+            String msg = "rx:" + rxByte +
                     "   tx:" + txByte;
             Log.i(TestMainActivity.class.getSimpleName(), msg);
             result = msg;
@@ -220,6 +220,12 @@ public class TestMainActivity extends AppCompatActivity {
         Date date = new Date(timeStamp);
         res = simpleDateFormat.format(date);
         return res;
+    }
+
+    public  void backgroundData(){
+        Settings.System.getString(getContentResolver(),Settings.Secure.BACKGROUND_DATA);
+//and
+        Settings.Secure.getString(getContentResolver(),Settings.Secure.BACKGROUND_DATA);
     }
 
 
