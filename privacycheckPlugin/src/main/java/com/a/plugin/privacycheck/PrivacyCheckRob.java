@@ -42,14 +42,14 @@ public class PrivacyCheckRob {
 
                         }
 
-                        @Override
-                        public void edit(FieldAccess fieldAccess) throws CannotCompileException {
-                            String mLongName = fieldAccess.getClassName() + "." + fieldAccess.getFieldName();
-                            if (PrivacyConfig.fieldHookValueSet.contains(mLongName) && fieldAccess.isReader()) {
-                                systemOutPrintln(mLongName, fieldAccess.getLineNumber(), ctMethod);
-                                InjectHookReturnValue.execute(fieldAccess);
-                            }
-                        }
+//                        @Override
+//                        public void edit(FieldAccess fieldAccess) throws CannotCompileException {
+//                            String mLongName = fieldAccess.getClassName() + "." + fieldAccess.getFieldName();
+//                            if (PrivacyConfig.fieldHookValueSet.contains(mLongName) && fieldAccess.isReader()) {
+//                                systemOutPrintln(mLongName, fieldAccess.getLineNumber(), ctMethod);
+//                                InjectHookReturnValue.execute(fieldAccess);
+//                            }
+//                        }
 
                         private boolean skipPackage(CtMethod ctMethod) {
                             String ctMethodLongName = ctMethod.getLongName();

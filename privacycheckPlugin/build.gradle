@@ -22,7 +22,7 @@ repositories{
 }
 group = 'com.a.plugin'
 archivesBaseName = 'PrivacyCheckPlugin'
-version = '0.0.7'
+version = '0.0.8'
 uploadArchives {
     repositories{
         mavenDeployer {
